@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alur Tahapan Skripsi</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f7fa;
+      color: #1e293b;
+    }
+
+    header {
+      background-color: #1e293b;
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .greeting {
+      font-size: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .clock {
+      font-size: 1.2rem;
+      margin-top: 0.5rem;
+    }
+
+    .timeline {
+      display: flex;
+      overflow-x: auto;
+      padding: 2rem;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .step {
+      background-color: white;
+      border-radius: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 1rem;
+      min-width: 220px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border-top: 6px solid #e2e8f0;
+    }
+
+    .step:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .step-icon {
+      font-size: 2.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .step.completed {
+      border-top-color: #22c55e;
+    }
+
+    .step.current {
+      border-top-color: #3b82f6;
+    }
+
+    .step.coming-soon {
+      opacity: 0.6;
+      border-top-color: #94a3b8;
+    }
+
+    .step-title {
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    .content-area {
+      padding: 2rem;
+      margin: 1rem auto;
+      max-width: 900px;
+      background-color: white;
+      border-radius: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+
+    th, td {
+      border: 1px solid #cbd5e1;
+      padding: 0.75rem;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f1f5f9;
+    }
+
+    a {
+      color: #2563eb;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .timeline {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+      }
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: #f5f5f5;
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    footer a {
+      color: #2563eb;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive stacked table */
+    .responsive-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .responsive-table thead {
+      background-color: #f1f5f9;
+    }
+
+    .responsive-table th,
+    .responsive-table td {
+      padding: 0.75rem;
+      text-align: left;
+      border: 1px solid #cbd5e1;
+    }
+
+    @media (max-width: 768px) {
+      .responsive-table thead {
+        display: none;
+      }
+
+      .responsive-table,
+      .responsive-table tbody,
+      .responsive-table tr,
+      .responsive-table td {
+        display: block;
+        width: 100%;
+      }
+
+      .responsive-table tr {
+        margin-bottom: 1rem;
+        border: 1px solid #cbd5e1;
+        border-radius: 0.5rem;
+        background-color: #fff;
+        padding: 0.5rem;
+      }
+
+      .responsive-table td {
+        text-align: right;
+        position: relative;
+        padding-left: 50%;
+        border: none;
+        border-bottom: 1px solid #e2e8f0;
+      }
+
+      .responsive-table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0.75rem;
+        top: 0.75rem;
+        font-weight: bold;
+        text-align: left;
+        color: #475569;
+      }
+    }
+
+    /* Container iframe agar tidak full lebar */
+.iframe-container {
+    margin: 2rem auto;               /* Jarak atas & bawah + tengah horizontal */
+    max-width: 1000px;               /* Batas maksimal lebar */
+    padding: 0 1rem;                 /* Padding kiri-kanan biar tidak mepet */
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Ukuran tetap dengan rasio responsif */
+  .iframe-container iframe {
+    width: 100%;
+    height: 500px;
+    border: none;
+    border-radius: 10px;
+  }
+  
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Alur Tahapan Skripsi Ilmu Komputer Unila</h1>
+    <div class="greeting" id="greeting">Selamat Datang!</div>
+    <div class="clock" id="clock">00:00:00</div>
+  </header>
+
+  <div class="timeline">
+    <div class="step completed" onclick="loadContent('data/seminar-judul.html')">
+      <div class="step-icon">📝</div>
+      <div class="step-title">Seminar Pengajuan Judul</div>
+    </div>
+    <div class="step completed" onclick="loadContent('data/seminar-proposal.html')">
+      <div class="step-icon">📋</div>
+      <div class="step-title">Seminar Proposal</div>
+    </div>
+    <div class="step current" onclick="loadContent('data/seminar-hasil.html')">
+      <div class="step-icon">🔍</div>
+      <div class="step-title">Seminar Hasil</div>
+    </div>
+    <div class="step" onclick="loadContent('data/kompre.html')">
+      <div class="step-icon">🎓</div>
+      <div class="step-title">Ujian Komprehensif</div>
+    </div>
+    <div class="step" onclick="loadContent('data/publikasi.html')">
+      <div class="step-icon">📚</div>
+      <div class="step-title">Publikasi Pepadun</div>
+    </div>
+    <div class="step coming-soon">
+      <div class="step-icon">🎉</div>
+      <div class="step-title">Wisuda (Coming Soon)</div>
+    </div>
+    <div class="step coming-soon">
+      <div class="step-icon">📤</div>
+      <div class="step-title">Sebar Skripsi (Coming Soon)</div>
+    </div>
+  </div>
+
+  <div id="content-area" class="content-area">
+    <p>Klik salah satu tahapan di atas untuk melihat detail persyaratannya.</p>
+  </div>
+
+  <div class="iframe-container">
+    <h2>📅 Jadwal Seminar</h2>
+    <iframe src="https://ilkom.unila.ac.id/site/seminar-schedule/"></iframe>
+  </div>
+
+  <footer>
+    <p>Created by <a href="https://royraflesmatorangpasaribu.github.io/portofolio-royraflesmatorangpasaribu.github.io/" target="_blank" rel="noopener noreferrer">RoyRaflesMatorangPasaribu@2025</a></p>
+  </footer>
+
+  <script>
+    function loadContent(file) {
+      fetch(file)
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById("content-area").innerHTML = html;
+
+          // Scroll ke tabel hanya jika di mobile
+          if (window.innerWidth <= 768) {
+            setTimeout(() => {
+              const table = document.getElementById("requirement-table");
+              if (table) {
+                table.scrollIntoView({ behavior: "smooth", block: "start" });
+              }
+            }, 300); // Delay untuk memastikan konten sudah dimuat
+          }
+        })
+        .catch(error => {
+          document.getElementById("content-area").innerHTML = "<p>Gagal memuat konten.</p>";
+        });
+    }
+
+    // Function to update greeting based on time
+    function updateGreeting() {
+      const greetingElement = document.getElementById("greeting");
+      const now = new Date();
+      const hour = now.getHours();
+      let greeting = "Selamat Datang!";
+
+      if (hour >= 5 && hour < 12) {
+        greeting = "Selamat Pagi!";
+      } else if (hour >= 12 && hour < 15) {
+        greeting = "Selamat Siang!";
+    } else if (hour >= 15 && hour < 18) {
+    greeting = "Selamat Sore!";
+    } else {
+    greeting = "Selamat Malam!";
+    }
+
+  greetingElement.textContent = greeting;
+}
+
+// Function to update clock every second
+function updateClock() {
+  const clockElement = document.getElementById("clock");
+  const now = new Date();
+
+  let hours = now.getHours().toString().padStart(2, "0");
+  let minutes = now.getMinutes().toString().padStart(2, "0");
+  let seconds = now.getSeconds().toString().padStart(2, "0");
+
+  clockElement.textContent = `${hours}:${minutes}:${seconds}`;
+}
+
+// Jalankan greeting dan clock saat halaman dimuat
+window.onload = function () {
+  updateGreeting();
+  updateClock();
+  setInterval(updateClock, 1000);
+};
+</script>
+</body>
+</html>
